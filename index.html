@@ -1,0 +1,204 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- <link rel="manifest" href="site.webmanifest"> -->
+  <!-- <link rel="apple-touch-icon" href="icon.png"> -->
+
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link href='https://fonts.googleapis.com/css?family=Quicksand:300' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+  <!--[if lte IE 9]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]-->
+  <div id="loader">Loading...</div>
+<!--   <input id="modal" type="checkbox" class="modal--toggle" checked="">
+  <div class="modal--container">
+    <div class="modal--content">
+      <div class="d-flex justify-content-between">
+        <div class="info">info</div>
+        <div class="img">
+          <img src="" alt="">
+        </div>
+      </div>
+    <label class="top-right close-modal" for="modal">x</label>
+    </div>
+  </div>
+ -->
+  <div id="root"></div>
+
+  <script src="js/vendor/modernizr-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.3.1.min.js"><\/script>')</script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/plugins.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
+  <script src="js/main.js"></script>
+
+</body>
+<script id="shopping-cart-template" type="text/x-handlebars-template">
+  <div class="container">
+    <h1>Your Shopping Bag</h1>
+
+    <div class="grid">
+      <div class="table-head border border-right-0 border-bottom-0 border-left-0">
+        <div class="row">
+          <div class="cell">items</div>
+          <div class="cell cell-align-center flex-0">size</div>
+          <div class="cell cell-align-center flex-0">qty</div>
+          <div class="cell cell-align-center flex-0">price</div>
+        </div>
+      </div>
+      <div class="cart table-body border-tb-3 border border-right-0 border-left-0">
+        
+        {{#each items}}
+        <div class="row" data-id="{{id}}">
+          <div class="cell cell-valign-top cell-img cell-nowrap">
+            <img src="{{imgUrl}}" alt="shirt" height="300" width="200">
+          </div>
+          <div class="cell description">
+            <div>
+              <div><b>{{name}}</b></div>
+              <div>Style#: {{style}}</div>
+              <div>Color: {{color}}</div>              
+            </div>
+            <ul class="nav button-group">
+              <li class="edit" x`>edit</li>
+              <li class="remove" onclick = "deleteCart({{id}})">x remove</li>
+              <li class="save-for-later">save for later</li>
+            </ul>
+          </div>
+          <div class="cell flex-0">{{size}}</div>
+          <div class="cell flex-0"> <input type="text" value="{{qty}}"></div>
+          <div class="cell flex-0"><sup class="currency">$</sup>{{price}}</div>
+        </div>
+        {{/each}}
+
+      </div>
+    </div>
+    
+    <div class="row mt-md-3">
+      <div class="col-md-4 p-0 need-help d-none d-md-block">
+        <div>
+          <b>Need help<br> or have quesitons?</b>      
+        </div>
+        <div>
+          Call Customer Service at <br> 1-800-555-5555      
+        </div>
+        <div>
+          <a href="#"><u>Chat with one of<br>our stylists</u></a>
+        </div>
+        <div>
+          <a href="#"><u>See return<br>& exchange policy</u></a>      
+        </div>
+      </div>
+      <div class="col-md-8 p-0 checkout">
+        <div class="promo row d-flex justify-content-between">
+          <div class="label">
+            Enter promotion code<br>
+            or Gift card
+          </div>
+          <form>
+            <input type="text" name="promoCode">
+            <input type="submit" value="apply">            
+          </form>
+        </div>
+        <div class="table-body border-tb-3 border border-right-0 border-left-0">
+          <div class="row d-flex justify-content-between">
+            <div class="label">
+              subtotal
+            </div>
+            <div class="value">
+              
+              <div class="text-lg"><sup class="currency">$</sup>{{checkout.subtotal}}</div>
+            </div>
+          </div>
+          <div class="row d-flex justify-content-between">
+            <div class="label">
+              promotion code {{checkout.promoCodeText}} applied 
+            </div>
+            <div class="value">
+              {{checkout.promoCodeValue}}
+            </div>
+          </div>
+          <div class="row d-flex justify-content-between">
+            <div class="label">
+              Estimated shipping*<br>
+              <small>
+                you qualify for free shipping<br>
+                because your order is over $50*
+              </small>
+            </div>
+            <div class="value">
+              {{checkout.shippingValue}}
+            </div>
+          </div>
+          <div class="row d-flex justify-content-between total">
+            <div class="label">
+              <div class="text-lg">Estimated Total</div>
+              <small>
+                Tax will be applied during checkout
+              </small>
+            </div>
+            <div class="value">
+              <div class="text-lg"><sup class="currency">$</sup>{{checkout.price}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="row buttons d-none d-md-block text-right">
+          <a href="#" class="underline mx-2">continue shopping</a>
+          <button class="btn btn-primary">checkout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="cartModal"></div>
+</script>
+<script id="editModal-template" type="text/x-handlebars-template">
+  <input id="editModal" type="checkbox" class="modal--toggle">
+  <label for="editModal" class="modal--toggle--text">Open Modal</label>
+  <div class="modal--container">
+    <div class="modal--content">
+      <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-around">
+        <div class="info bt-3-grey text-center modalLeft">
+          <div>{{name}}</div>
+          <div class="price"><sup class="currency">$</sup>{{price}}</div>
+          <div class="d-flex justify-content-center mt-2 ">
+            <select>
+              <option value="S">S</option>
+              <option value="M">M</option>
+              <option value="L">L</option>
+            </select>
+            <select>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>
+          </div>
+          <div style="margin-top:20px;"><button class="btn btn-primary" onclick = editCart({{id}})>EDIT</button></div>
+        </div>
+        <div class="img modalRight">
+          <img src="{{imgUrl}}" alt="edit product">
+        </div>
+        <br>
+        <br>
+      </div>
+      <label class="top-right close-modal" for="editModal">x</label>
+    </div>
+  </div>
+</div>
+</script>
+
+</html>
+

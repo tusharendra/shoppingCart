@@ -1,0 +1,39 @@
+{
+  "items": [
+    {
+      "id": 0,
+      "name": "Incredibles Tshirt",
+      "imgUrl": "img/item1.jpg",
+      "style": "M14S",
+      "color": "Red",
+      "size": "S",
+      "qty": "2",
+      "price": "249"
+    },
+    {
+      "id": 1,
+      "name": "NOVA Polyester Tshirt",
+      "imgUrl": "img/item2.jpg",
+      "style": "M13S",
+      "color": "Black",
+      "size": "S",
+      "qty": "2",
+      "price": "299"
+    },
+    {
+      "id": 2,
+      "name": "Cargo Defence Pants",
+      "imgUrl": "img/item3.jpg",
+      "style": "M12S",
+      "color": "Blue",
+      "size": "S",
+      "qty": "2",
+      "price": "349"
+    }
+  ],
+  "checkout": {
+    "subtotal": 900,
+    "shippingValue": "free",
+    "price": 900
+  }
+}
