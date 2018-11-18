@@ -7,7 +7,8 @@
       "style": "M14S",
       "color": "Red",
       "size": "S",
-      "qty": "2",
+      "qty": "1",
+      "rate": 249,
       "price": "249"
     },
     {
@@ -18,7 +19,8 @@
       "color": "Black",
       "size": "S",
       "qty": "2",
-      "price": "299"
+      "rate": 299,
+      "price": 598
     },
     {
       "id": 2,
@@ -27,13 +29,30 @@
       "style": "M12S",
       "color": "Blue",
       "size": "S",
-      "qty": "2",
-      "price": "349"
+      "qty": "1",
+      "rate": 249,
+      "price": 249
     }
   ],
   "checkout": {
-    "subtotal": 900,
+    "subtotal": 1096,
+    "promocode": "F10",
+    "promoCodeValue": "10",
     "shippingValue": "free",
-    "price": 900
-  }
+    "price": 1086
+  },
+  "promotions": [
+    {
+      "coupon": "F10",
+      "price": "10"
+    },
+    {
+      "coupon": "F100",
+      "price": "100"
+    },
+    {
+      "coupon": "F50",
+      "price": "50"
+    }
+  ]
 }

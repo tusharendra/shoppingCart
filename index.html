@@ -53,10 +53,10 @@
     <div class="grid">
       <div class="table-head border border-right-0 border-bottom-0 border-left-0">
         <div class="row">
-          <div class="cell">items</div>
-          <div class="cell cell-align-center flex-0">size</div>
-          <div class="cell cell-align-center flex-0">qty</div>
-          <div class="cell cell-align-center flex-0">price</div>
+          <div class="cell">Items</div>
+          <div class="cell cell-align-center flex-0">Size</div>
+          <div class="cell cell-align-center flex-0">Qty</div>
+          <div class="cell cell-align-center flex-0">Price</div>
         </div>
       </div>
       <div class="cart table-body border-tb-3 border border-right-0 border-left-0">
@@ -109,8 +109,8 @@
             or Gift card
           </div>
           <form>
-            <input type="text" name="promoCode">
-            <input type="submit" value="apply">            
+            <input type="text" id="promocode" name="promoCode">
+            <input type="submit" onclick = applyPromo() value="apply">            
           </form>
         </div>
         <div class="table-body border-tb-3 border border-right-0 border-left-0">
@@ -125,7 +125,7 @@
           </div>
           <div class="row d-flex justify-content-between">
             <div class="label">
-              promotion code {{checkout.promoCodeText}} applied 
+              promotion code {{checkout.promocode}} applied 
             </div>
             <div class="value">
               {{checkout.promoCodeValue}}
@@ -152,7 +152,7 @@
             </div>
             <div class="value">
               <div class="text-lg"><sup class="currency">$</sup>{{checkout.price}}</div>
-            </div>
+            </div
           </div>
         </div>
         <div class="row buttons d-none d-md-block text-right">

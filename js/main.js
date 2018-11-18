@@ -167,7 +167,6 @@ function loadShoppingCartTemplate(){
             let json = Object.assign({},{
                 "items":items,
                 "checkout":checkout});
-            console.log(json);
             loadTemplate(document.getElementById('root'),'shopping-cart-template',json);
     addOrderPenaltyEvent(json);
         })
@@ -239,7 +238,8 @@ let editCart = (id) => {
     .then(data => {
         let editedObject = Object.assign({},data,{
             "size":size,
-            "qty":qty
+            "qty":qty,
+            "price":data.rate*qty
         });
         const putData = {
             method: 'PUT', // *GET, POST, PUT, DELETE, etc.
@@ -268,17 +268,20 @@ let computeTotal = () => {
     .then(items => {
         let total = 0;
         items.map(item => {
-            total += parseInt(item.price)*item.qty;
+            total += parseInt(item.price);
         });
 
         let putUrl = `http://localhost:3000/checkout`;
         fetch(putUrl)
     .then(resp => resp.json())
     .then(data => {
+        let price = total-parseInt(data.promoCodeValue);
+        console.log(price);
         let editedObject = Object.assign({},data,{
             "subtotal":total,
-            "price":total
+            "price":price
         });
+        console.log(editedObject);
         const putData = {
             method: 'PUT', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, cors, *same-origin
@@ -292,11 +295,60 @@ let computeTotal = () => {
             referrer: 'no-referrer', // no-referrer, *client
             body: JSON.stringify(editedObject)
         }; 
-        fetch(url,putData)
+        fetch(putUrl,putData)
         .then(() => {
-            computeTotal();
             window.location.reload();
         });
-   })
+    })
+});
+}
+
+let applyPromo = () => {
+    let promoCode = document.getElementById(`promocode`).value;
+    console.log(promoCode);
+    let url = `http://localhost:3000/promotions`;
+    fetch(url)
+    .then(resp => resp.json())
+    .then(promotions => {
+        console.log(promotions);
+        promotions.map(promo => {
+            console.log(promo.coupon);
+            if(promo.coupon==promoCode){
+                console.log(promo.price);
+                updatePromo(promo);
+            }
+        })
+    })
+}
+
+let updatePromo = (promotion) => {
+    let url = `http://localhost:3000/checkout`;
+    fetch(url)
+    .then(resp => resp.json())
+    .then(data => {
+        let price = data.total-parseInt(data.price);
+        let object = Object.assign({},data, {
+            "promocode":promotion.coupon,
+            "promoCodeValue":promotion.price,
+            "price":price
+        });
+        console.log(object);
+        const putData = {
+            method: 'PUT', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, cors, *same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'same-origin', // include, same-origin, *omit
+            headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+            // "Content-Type": "application/x-www-form-urlencoded",
+            },
+            redirect: 'follow', // manual, *follow, error
+            referrer: 'no-referrer', // no-referrer, *client
+            body: JSON.stringify(object)
+        }; 
+        fetch(url,putData)
+        .then(()=>{
+            window.location.reload();
+        });
     })
 }
